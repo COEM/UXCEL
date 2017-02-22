@@ -22,7 +22,7 @@ public class xc_sheetList {
     //private static ArrayList<String, String> nama = new ArrayList<String, String>();
 
     public static Map<String, String> getSheetName(){
-        File dir = new File(uxcel.getCleanPath() +"/var/"+uxcel.getFileName()+"/xl/worksheets");
+        File dir = new File(System.getProperty("java.io.tmpdir") + "var/"+uxcel.getFileName()+"/xl/worksheets");
         File[] listDir = dir.listFiles();
         
         for (File file : listDir) {

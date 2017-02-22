@@ -84,7 +84,7 @@ public class xc_extractFiles {
                         while(e.hasMoreElements())
                         {
                                 ZipEntry entry = (ZipEntry)e.nextElement();
-                                File destinationFilePath = new File(uxcel.getCleanPath() + "/var/" + uxcel.getFileName(),entry.getName());
+                                File destinationFilePath = new File(System.getProperty("java.io.tmpdir") + "var/" + uxcel.getFileName(),entry.getName());
  
                                 //create directories if required.
                                 destinationFilePath.getParentFile().mkdirs();

@@ -39,6 +39,10 @@ public class uxcel {
        return fileNameExt = name;
     }
     
+    public static String setFileName(String name){
+       return fileName = name;
+    }
+    
     public static String getFileName(){
         int pos = fileNameExt.lastIndexOf(".");
         if (pos > 0) {
@@ -89,5 +93,21 @@ public class uxcel {
     public static String getSaveLocation(){
         return saveFileLocation;
     }
+    
+    public static boolean deleteDir(File dir) {
+      if (dir.isDirectory()) {
+         String[] children = dir.list();
+         for (int i = 0; i < children.length; i++) {
+            boolean success = deleteDir (new File(dir, children[i]));
+            
+            if (!success) {
+               return false;
+            }
+         }
+      }
+      return dir.delete();
+      //System.out.println("The directory is deleted.");
+   }
+    
     
 }

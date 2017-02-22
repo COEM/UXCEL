@@ -33,9 +33,9 @@ public class home extends javax.swing.JFrame {
         initComponents();
         
         final String dir = System.getProperty("user.dir");
-        JOptionPane.showMessageDialog(rootPane, uxcel.getCleanPath());
-        File var = new File(uxcel.getCleanPath() + "/var");
-        File tmp = new File(uxcel.getCleanPath() + "/tmp");
+        //JOptionPane.showMessageDialog(rootPane, System.getProperty("java.io.tmpdir"));
+        File var = new File(System.getProperty("java.io.tmpdir") + "var");
+        File tmp = new File(System.getProperty("java.io.tmpdir") + "tmp");
         if ((var.exists()) && (tmp.exists())) {
             
         } else {
@@ -154,17 +154,20 @@ public class home extends javax.swing.JFrame {
         if (fileChooser.showOpenDialog(rootPane)== JFileChooser.APPROVE_OPTION) {
             uxcel.setFileLocation(fileChooser.getSelectedFile().getPath());
             uxcel.setFileNameExt(fileChooser.getSelectedFile().getName());
+            
             jLabel1.setText(uxcel.getFileName());
             System.out.println(uxcel.getFileLocation());
             try {
-                uxcel.copyExcel(new File(uxcel.getFileLocation()), new File(uxcel.getCleanPath()+"/tmp/"+uxcel.getFileNameExt()));
+                uxcel.copyExcel(new File(uxcel.getFileLocation()), new File(System.getProperty("java.io.tmpdir") + "tmp/"+uxcel.getFileNameExt()));
                 try {
-                    xc_extension.renameFileExtension(uxcel.getCleanPath()+"/tmp/"+uxcel.getFileNameExt(), "zip");
+                    xc_extension.renameFileExtension(System.getProperty("java.io.tmpdir") + "tmp/"+uxcel.getFileNameExt(), "zip");
                     try {
                         xc_extractFiles.unzip(uxcel.getFileLocation());
                         System.out.println();
                         try {
                             System.out.println(xc_sheetList.getSheetName());
+                            //System.out.println(System.getProperty("java.io.tmpdir") + "var/"+uxcel.getFileName()+"/xl/worksheets");
+                            //System.out.println();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(rootPane, e, "4", 0);
                         }
@@ -222,14 +225,30 @@ public class home extends javax.swing.JFrame {
 ////System.out.println(xc_sheetList.getSheetName().get("sheet1")+".xml");
 //                //xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().get("sheet1")+".xml", "sheetProtection");
                 try {
-                    File dir = new File(uxcel.getCleanPath()+"/var/"+uxcel.getFileName());
+                    File dir = new File(System.getProperty("java.io.tmpdir") +"/var/"+uxcel.getFileName());
 //                    String zipDirName = uxcel.getCleanPath()+"\\tmp\\"+uxcel.getFileName()+".zip";
-                    String zipDirName = uxcel.getSaveLocation()+"\\"+uxcel.getFileName()+ "_uxcel.zip";
+                    String zipDirName = uxcel.getSaveLocation()+ "\\" +uxcel.getFileName() + "_uxcel.zip";
                     xc_ZipFile.zipDirectory(dir, zipDirName);
                     try {
-                        xc_extension.renameFileExtension(zipDirName, "xlsx");
+                        xc_extension.renameFileExtension(zipDirName, xc_extension.getFileExtension(uxcel.getFileNameExt()));
                             try {
                                 System.out.println(xc_sheetList.getSheetName());
+                                JOptionPane.showMessageDialog(null, "Excel " + uxcel.getFileName() + " UnProtected sheet success!");
+                                try {
+                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "var/" + uxcel.getFileName()));
+                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "tmp/" + uxcel.getFileName() + ".zip"));
+                                    try {
+                                        uxcel.setFileNameExt("");
+                                        uxcel.setFileName("");
+                                        
+                                        uxcel.setFileLocation("");
+                                        uxcel.setSaveLocation("");
+                                        xc_ZipFile.filesListInDir.clear();
+                                        //System.exit(0);
+                                    } catch (Exception e) {
+                                    }
+                                } catch (Exception e) {
+                                }
                             } catch (Exception e) {
                             }
                         } catch (Exception e) {
