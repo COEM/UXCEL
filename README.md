@@ -1,0 +1,3 @@
+# UXCEL buka proteksi excel
+
+PROTEKSIFILE, BUKAN PASSWORD
