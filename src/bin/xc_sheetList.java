@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bin;
 
 import java.io.File;
@@ -19,7 +14,6 @@ import java.util.stream.Collectors;
  */
 public class xc_sheetList {
     private static Map<String, String> nama = new HashMap<String, String>();
-    //private static ArrayList<String, String> nama = new ArrayList<String, String>();
 
     public static Map<String, String> getSheetName(){
         File dir = new File(System.getProperty("java.io.tmpdir") + "var/"+uxcel.getFileName()+"/xl/worksheets");

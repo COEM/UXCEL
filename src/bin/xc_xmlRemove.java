@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bin;
 
 /**
@@ -21,11 +16,7 @@ public class xc_xmlRemove {
     public static void xmlRemovePassword(String name, String ElementRemove){
         try{
             BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-            //System.out.print("Enter a XML file name: ");
-//            String xmlFile = ;
             File file = new File(name);
-            //System.out.print("Enter an element which have to delete: ");
-            //String remElement = bf.readLine();
             if (file.exists()){
 
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -34,9 +25,7 @@ public class xc_xmlRemove {
                 TransformerFactory tFactory = TransformerFactory.newInstance();
                 Transformer tFormer = tFactory.newTransformer();
                 Element element = (Element)doc.getElementsByTagName(ElementRemove).item(0);
-//				Remove the node
                 element.getParentNode().removeChild(element);
-//                              Normalize the DOM tree to combine all adjacent nodes
                 doc.normalize();
                 Source source = new DOMSource(doc);
                 final OutputStream os = new FileOutputStream(name);
@@ -50,13 +39,7 @@ public class xc_xmlRemove {
             }
         }
         catch (Exception e){
-//            JOptionPane.showMessageDialog(null, e, "Error Removing Password", 0);
-//            System.exit(0);
+            
         }
-    }
-    
-    public static void main(String[] args) {
-        //
-         //xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().get("sheet1")+".xml", "sheetProtection");
     }
 }

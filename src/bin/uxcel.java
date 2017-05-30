@@ -9,13 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author cacing
@@ -55,13 +48,9 @@ public class uxcel {
         InputStream inStream = null;
     	OutputStream outStream = null;
     	try{
-// 
-//    	    File file1 =new File(uxcel.getFileLocation());
-//    	    File file2 =new File("tmp/"+uxcel.getFileNameExt());
  
     	    inStream = new FileInputStream(source);
-    	    outStream = new FileOutputStream(dest); // for override file content
-    	    //outStream = new FileOutputStream(file2,<strong>true</strong>); // for append file content
+    	    outStream = new FileOutputStream(dest);
  
     	    byte[] buffer = new byte[1024];
  
@@ -106,7 +95,6 @@ public class uxcel {
          }
       }
       return dir.delete();
-      //System.out.println("The directory is deleted.");
    }
     
     

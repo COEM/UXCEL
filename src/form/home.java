@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package form;
 
 import bin.uxcel;
@@ -57,6 +52,7 @@ public class home extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -94,6 +90,14 @@ public class home extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItem1);
+
+        jMenuItem4.setText("Check");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem4);
 
         jMenuBar1.add(jMenu1);
 
@@ -166,8 +170,6 @@ public class home extends javax.swing.JFrame {
                         System.out.println();
                         try {
                             System.out.println(xc_sheetList.getSheetName());
-                            //System.out.println(System.getProperty("java.io.tmpdir") + "var/"+uxcel.getFileName()+"/xl/worksheets");
-                            //System.out.println();
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(rootPane, e, "4", 0);
                         }
@@ -193,81 +195,77 @@ public class home extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowActivated
 
     private void btn_BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_BrowseActionPerformed
-        // TODO add your handling code here:
-//        for (int i = 0; i < xc_sheetList.getSheetName().size(); i++) {
-//                    System.out.println(xc_sheetList.getSheetName().values().toArray()[i]);
-//                    xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().values().toArray()[i]+".xml", "sheetProtection");
-//                }
         int result;
-    dirChooser.setCurrentDirectory(new java.io.File("."));
-    dirChooser.setDialogTitle("Save To");
-    dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    //
-    // disable the "All files" option.
-    //
-    dirChooser.setAcceptAllFileFilterUsed(false);
-    //    
-    if (dirChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
-        //System.out.println("getCurrentDirectory(): " +  fileChooser.getCurrentDirectory());
-        //System.out.println("getSelectedFile() : " +  fileChooser.getSelectedFile());
-        uxcel.setSaveLocation(dirChooser.getSelectedFile().toString());
-        //System.out.println(uxcel.getSaveLocation());
-        if (uxcel.getSaveLocation().length() > 0) {
-          try {
-                for (int i = 0; i < xc_sheetList.getSheetName().size(); i++) {
-                    System.out.println(xc_sheetList.getSheetName().values().toArray()[i]);
+        dirChooser.setCurrentDirectory(new java.io.File("."));
+        dirChooser.setDialogTitle("Save To");
+        dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        //
+        // disable the "All files" option.
+        //
+        dirChooser.setAcceptAllFileFilterUsed(false);
+        //    
+        if (dirChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) { 
+            uxcel.setSaveLocation(dirChooser.getSelectedFile().toString());
+            if (xc_extension.getFileExtension(uxcel.getFileLocation()).equals("xlsx")) { //office 2010
+                if (uxcel.getSaveLocation().length() > 0) {
                     try {
-                        xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().values().toArray()[i]+".xml", "sheetProtection");
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, (String) xc_sheetList.getSheetName().values().toArray()[i] + " canot be unprotect, because dont have password", (String) xc_sheetList.getSheetName().values().toArray()[i], i);
-                    }
-                }
-////System.out.println(xc_sheetList.getSheetName().get("sheet1")+".xml");
-//                //xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().get("sheet1")+".xml", "sheetProtection");
-                try {
-                    File dir = new File(System.getProperty("java.io.tmpdir") +"/var/"+uxcel.getFileName());
-//                    String zipDirName = uxcel.getCleanPath()+"\\tmp\\"+uxcel.getFileName()+".zip";
-                    String zipDirName = uxcel.getSaveLocation()+ "\\" +uxcel.getFileName() + "_uxcel.zip";
-                    xc_ZipFile.zipDirectory(dir, zipDirName);
-                    try {
-                        xc_extension.renameFileExtension(zipDirName, xc_extension.getFileExtension(uxcel.getFileNameExt()));
+                        for (int i = 0; i < xc_sheetList.getSheetName().size(); i++) {
+                            System.out.println(xc_sheetList.getSheetName().values().toArray()[i]);
                             try {
-                                System.out.println(xc_sheetList.getSheetName());
-                                JOptionPane.showMessageDialog(null, "Excel " + uxcel.getFileName() + " UnProtected sheet success!");
-                                try {
-                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "var/" + uxcel.getFileName()));
-                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "tmp/" + uxcel.getFileName() + ".zip"));
+                                xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().values().toArray()[i]+".xml", "sheetProtection");
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, (String) xc_sheetList.getSheetName().values().toArray()[i] + " canot be unprotect, because dont have password", (String) xc_sheetList.getSheetName().values().toArray()[i], i);
+                            }
+                        }
+                        try {
+                            File dir = new File(System.getProperty("java.io.tmpdir") +"/var/"+uxcel.getFileName());
+                            String zipDirName = uxcel.getSaveLocation()+ "\\" +uxcel.getFileName() + "_uxcel.zip";
+                            xc_ZipFile.zipDirectory(dir, zipDirName);
+                            try {
+                                xc_extension.renameFileExtension(zipDirName, xc_extension.getFileExtension(uxcel.getFileNameExt()));
                                     try {
-                                        uxcel.setFileNameExt("");
-                                        uxcel.setFileName("");
-                                        
-                                        uxcel.setFileLocation("");
-                                        uxcel.setSaveLocation("");
-                                        xc_ZipFile.filesListInDir.clear();
-                                        //System.exit(0);
+                                        System.out.println(xc_sheetList.getSheetName());
+                                        JOptionPane.showMessageDialog(null, "Excel " + uxcel.getFileName() + " UnProtected sheet success!");
+                                        try {
+                                            uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "var/" + uxcel.getFileName()));
+                                            uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "tmp/" + uxcel.getFileName() + ".zip"));
+                                            try {
+                                                uxcel.setFileNameExt("");
+                                                uxcel.setFileName("");
+
+                                                uxcel.setFileLocation("");
+                                                uxcel.setSaveLocation("");
+                                                xc_ZipFile.filesListInDir.clear();
+                                            } catch (Exception e) {
+                                            }
+                                        } catch (Exception e) {
+                                        }
                                     } catch (Exception e) {
                                     }
                                 } catch (Exception e) {
-                                }
-                            } catch (Exception e) {
-                            }
-                        } catch (Exception e) {
-                  System.out.println(e);
-                  }
-              } catch (Exception e) {
-                  System.out.println(e);
-              }
-          } catch (Exception e) {
-              System.out.println(e);
-          }
+                          System.out.println(e);
+                          }
+                      } catch (Exception e) {
+                          System.out.println(e);
+                      }
+                    } catch (Exception e) {
+                      System.out.println(e);
+                    }
+                }
+            } else if(xc_extension.getFileExtension(uxcel.getFileLocation()).equals("xls")){
+                System.out.println("Running <= 2007");
+            }
         }
-    }
-    else {
-      System.out.println("No Selection ");
-    }
+        else {
+          System.out.println("No Selection ");
+        }
         
 
     }//GEN-LAST:event_btn_BrowseActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,6 +314,7 @@ public class home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JTextField txt_File;
     // End of variables declaration//GEN-END:variables
 }
