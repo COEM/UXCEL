@@ -24,7 +24,7 @@ public class xc_ZipFile {
             FileOutputStream fos = new FileOutputStream(zipDirName);
             ZipOutputStream zos = new ZipOutputStream(fos);
             for(String filePath : filesListInDir){
-                System.out.println("Zipping "+ filePath);
+//                System.out.println("Zipping "+ filePath);
                 ZipEntry ze = new ZipEntry(filePath.substring(dir.getAbsolutePath().length()+1, filePath.length()));
                 zos.putNextEntry(ze);
                 FileInputStream fis = new FileInputStream(filePath);
@@ -68,7 +68,7 @@ public class xc_ZipFile {
             zos.close();
             fis.close();
             fos.close();
-            System.out.println(file.getCanonicalPath()+" is zipped to "+zipFileName);
+//            System.out.println(file.getCanonicalPath()+" is zipped to "+zipFileName);
             
         } catch (IOException e) {
             e.printStackTrace();

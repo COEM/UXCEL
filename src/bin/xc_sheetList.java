@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
  */
 public class xc_sheetList {
     private static Map<String, String> nama = new HashMap<String, String>();
-
     public static Map<String, String> getSheetName(){
         File dir = new File(System.getProperty("java.io.tmpdir") + "var/"+uxcel.getFileName()+"/xl/worksheets");
         File[] listDir = dir.listFiles();
@@ -31,9 +30,5 @@ public class xc_sheetList {
             }
         }
         return nama;
-    }
-    
-    public static void main(String[] args) {
-        System.out.println(getSheetName());
     }
 }

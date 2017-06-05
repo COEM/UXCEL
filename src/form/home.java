@@ -6,6 +6,7 @@ import bin.xc_extension;
 import bin.xc_extractFiles;
 import bin.xc_sheetList;
 import bin.xc_xmlRemove;
+import bin.wBook;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -122,13 +123,12 @@ public class home extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txt_File, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_Browse, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_File, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_Browse, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -214,9 +214,18 @@ public class home extends javax.swing.JFrame {
                             try {
                                 xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().values().toArray()[i]+".xml", "sheetProtection");
                             } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, (String) xc_sheetList.getSheetName().values().toArray()[i] + " canot be unprotect, because dont have password", (String) xc_sheetList.getSheetName().values().toArray()[i], i);
+                                JOptionPane.showMessageDialog(null, (String) xc_sheetList.getSheetName().values().toArray()[i] + " Cannot be Unprotect!, because dont have password", (String) xc_sheetList.getSheetName().values().toArray()[i], i);
                             }
                         }
+                        
+                        //remove password workbook
+                        try {
+                            xc_xmlRemove.xmlRemovePassword(wBook.workBook().toString(), "workbookProtection");
+  
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, uxcel.getFileName()+" not protected ");
+                        }
+                        
                         try {
                             File dir = new File(System.getProperty("java.io.tmpdir") +"/var/"+uxcel.getFileName());
                             String zipDirName = uxcel.getSaveLocation()+ "\\" +uxcel.getFileName() + "_uxcel.zip";
