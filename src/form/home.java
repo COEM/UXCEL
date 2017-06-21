@@ -1,5 +1,7 @@
 package form;
 
+//import bin.crackVBA;
+//import static bin.crackVBA.vba_bin;
 import bin.uxcel;
 import bin.xc_ZipFile;
 import bin.xc_extension;
@@ -283,6 +285,67 @@ public class home extends javax.swing.JFrame {
         }
     } 
     
+    private void crack2010vba(){
+        if (uxcel.getSaveLocation().length() > 0) {
+            try {
+                for (int i = 0; i < xc_sheetList.getSheetName().size(); i++) {
+                    System.out.println(xc_sheetList.getSheetName().values().toArray()[i]);
+                    try {
+                        xc_xmlRemove.xmlRemovePassword(xc_sheetList.getSheetName().values().toArray()[i]+".xml", "sheetProtection");
+                    } catch (Exception e) {
+                        System.out.println(e.getLocalizedMessage());
+                    }
+                }
+                try {
+                    xc_xmlRemove.xmlRemovePassword(wBook.workBook().toString(), "workbookProtection");
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, uxcel.getFileName()+" not protected ");
+                }
+                
+                //crack password
+                //if (crackVBA.vba_bin().exists()) {
+                  //  crackVBA.modifyFile(crackVBA.vba_bin().toString(), "DPB", "DPx");
+                //}   
+                
+                
+                try {
+                    File dir = new File(System.getProperty("java.io.tmpdir") +"/var/"+uxcel.getFileName());
+                    String zipDirName = uxcel.getSaveLocation()+ "\\" +uxcel.getFileName() + "_uxcel.zip";
+                    xc_ZipFile.zipDirectory(dir, zipDirName);
+                    try {
+                        xc_extension.renameFileExtension(zipDirName, xc_extension.getFileExtension(uxcel.getFileNameExt()));
+                            try {
+                                System.out.println(xc_sheetList.getSheetName());
+                                JOptionPane.showMessageDialog(null, "Excel " + uxcel.getFileName() + " UnProtected sheet success!");
+                                try {
+                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "var/" + uxcel.getFileName()));
+                                    uxcel.deleteDir(new File(System.getProperty("java.io.tmpdir") + "tmp/" + uxcel.getFileName() + ".zip"));
+                                    try {
+                                        uxcel.setFileNameExt("");
+                                        uxcel.setFileName("");
+
+                                        uxcel.setFileLocation("");
+                                        uxcel.setSaveLocation("");
+                                        xc_ZipFile.filesListInDir.clear();
+                                    } catch (Exception e) {
+                                    }
+                                } catch (Exception e) {
+                                }
+                            } catch (Exception e) {
+                            }
+                        } catch (Exception e) {
+                  System.out.println(e);
+                  }
+              } catch (Exception e) {
+                  System.out.println(e);
+              }
+            } catch (Exception e) {
+              System.out.println(e);
+            }
+        }
+    } 
+    
     private void btnOpenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOpenMouseEntered
         // TODO add your handling code here:
         btnOpen.setBackground(new Color(29,149,96));
@@ -349,6 +412,15 @@ public class home extends javax.swing.JFrame {
                 crack2010();
             } else if(xc_extension.getFileExtension(uxcel.getFileLocation()).equals("xls")){
                 JOptionPane.showMessageDialog(this, "File not supported, if your file is XLS, u can open it first, then save as XLSX type!");
+            } else if(xc_extension.getFileExtension(uxcel.getFileLocation()).equals("xlsm")){
+//                JOptionPane.showMessageDialog(this, "File not supported, if your file is XLS, u can open it first, then save as XLSX type!");
+                int input = JOptionPane.showConfirmDialog(null, "Do you want to crack VBAProject Password in "+uxcel.getFileName()+"?");
+                if (input == 0) {
+                    JOptionPane.showMessageDialog(this, "This feature is under development, but file is already unprotected!");
+                    crack2010();
+                } else if(input == 1){
+                    crack2010();
+                }
             }
         }
             else {
